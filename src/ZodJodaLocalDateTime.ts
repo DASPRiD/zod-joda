@@ -22,11 +22,11 @@ export class ZodJodaLocalDateTime extends ZodType<LocalDateTime, ZodJodaLocalDat
         }
 
         if (parsedType !== ZodParsedType.string) {
-            ctx.addIssue(data, {
+            this.addIssue(ctx, {
                 code: ZodIssueCode.invalid_type,
                 expected: ZodParsedType.string,
                 received: parsedType,
-            });
+            }, {data});
 
             return INVALID;
         }
@@ -34,10 +34,10 @@ export class ZodJodaLocalDateTime extends ZodType<LocalDateTime, ZodJodaLocalDat
         try {
             data = LocalDateTime.parse(data, this._def.dateTimeFormatter);
         } catch (e) {
-            ctx.addIssue(data, {
+            this.addIssue(ctx, {
                 code: ZodIssueCode.custom,
                 message: 'Invalid local date time',
-            });
+            }, {data});
 
             return INVALID;
         }
