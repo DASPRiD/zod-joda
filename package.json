@@ -1,6 +1,6 @@
 {
   "name": "zod-joda",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "JS-Joda integration for Zod validation library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
