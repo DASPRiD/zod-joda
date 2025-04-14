@@ -1,4 +1,4 @@
-import { type ZodType, transform } from "zod";
+import { type ZodMiniType, transform } from "@zod/mini";
 import {
     type CoreParams,
     type TransformConstructorConfig,
@@ -17,7 +17,7 @@ const createParseConstructor =
         schemaFormat,
         example,
     }: TransformConstructorConfig<T, P>) =>
-    (params?: P): ZodType<T, T | string> => {
+    (params?: P): ZodMiniType<T, T | string> => {
         const instance = transform<T | string, T>((input: unknown, context) => {
             if (isInstance(input)) {
                 return input;
