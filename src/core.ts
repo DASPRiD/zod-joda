@@ -12,8 +12,7 @@ export type CoreParams = {
     error?: string;
 };
 
-export type TransformConstructorConfig<T, P extends CoreParams> = {
-    isInstance: (input: unknown) => input is T;
+export type TransformConfig<T, P extends CoreParams> = {
     parse: (input: string, params?: P) => T;
     invalidMessage: string;
     schemaFormat: string;
@@ -24,16 +23,14 @@ export type TemporalParams = CoreParams & {
     dateTimeFormatter?: DateTimeFormatter;
 };
 
-export const durationConfig: TransformConstructorConfig<Duration, CoreParams> = {
-    isInstance: (input) => input instanceof Duration,
+export const durationConfig: TransformConfig<Duration, CoreParams> = {
     parse: (input) => Duration.parse(input),
     invalidMessage: "Invalid duration",
     schemaFormat: "duration",
     example: () => "PT1H",
 };
 
-export const localDateConfig: TransformConstructorConfig<LocalDate, TemporalParams> = {
-    isInstance: (input) => input instanceof LocalDate,
+export const localDateConfig: TransformConfig<LocalDate, TemporalParams> = {
     parse: (input, params) => LocalDate.parse(input, params?.dateTimeFormatter),
     invalidMessage: "Invalid local date",
     schemaFormat: "date",
@@ -43,8 +40,7 @@ export const localDateConfig: TransformConstructorConfig<LocalDate, TemporalPara
         ),
 };
 
-export const localDateTimeConfig: TransformConstructorConfig<LocalDateTime, TemporalParams> = {
-    isInstance: (input) => input instanceof LocalDateTime,
+export const localDateTimeConfig: TransformConfig<LocalDateTime, TemporalParams> = {
     parse: (input, params) => LocalDateTime.parse(input, params?.dateTimeFormatter),
     invalidMessage: "Invalid local date time",
     schemaFormat: "local-date-time",
@@ -54,8 +50,7 @@ export const localDateTimeConfig: TransformConstructorConfig<LocalDateTime, Temp
         ),
 };
 
-export const localTimeConfig: TransformConstructorConfig<LocalTime, TemporalParams> = {
-    isInstance: (input) => input instanceof LocalTime,
+export const localTimeConfig: TransformConfig<LocalTime, TemporalParams> = {
     parse: (input, params) => LocalTime.parse(input, params?.dateTimeFormatter),
     invalidMessage: "Invalid local time",
     schemaFormat: "time",
@@ -65,8 +60,7 @@ export const localTimeConfig: TransformConstructorConfig<LocalTime, TemporalPara
         ),
 };
 
-export const zonedDateTimeConfig: TransformConstructorConfig<ZonedDateTime, TemporalParams> = {
-    isInstance: (input) => input instanceof ZonedDateTime,
+export const zonedDateTimeConfig: TransformConfig<ZonedDateTime, TemporalParams> = {
     parse: (input, params) => ZonedDateTime.parse(input, params?.dateTimeFormatter),
     invalidMessage: "Invalid zoned date time",
     schemaFormat: "date-time",

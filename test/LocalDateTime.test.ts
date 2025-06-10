@@ -1,16 +1,10 @@
 import assert from "node:assert/strict";
 import { it } from "node:test";
 import { DateTimeFormatter, LocalDateTime } from "@js-joda/core";
+import { toJSONSchema } from "zod/v4/core";
 import { describeMatrix } from "./matrix.js";
 
-describeMatrix("LocalDateTime", (zj) => {
-    it("should allow LocalDateTime value", () => {
-        const schema = zj.localDateTime();
-        const localDateTime = LocalDateTime.now();
-        const result = schema.parse(localDateTime);
-        assert.equal(result, localDateTime);
-    });
-
+describeMatrix("LocalDateTime", (zj, z) => {
     it("should allow ISO date value", () => {
         const schema = zj.localDateTime();
         const localDateTime = LocalDateTime.of(2021, 1, 1, 20, 0, 0);
@@ -38,15 +32,15 @@ describeMatrix("LocalDateTime", (zj) => {
 
     it("should allow error override", () => {
         const schema = zj.localDateTime({ error: "whoops" });
-        const result = schema.safeParse(1);
+        const result = schema.safeParse("a");
         assert(!result.success);
         assert.deepEqual(result.error.issues[0].message, "whoops");
     });
 
     it("should create a standard JSON schema", () => {
         const schema = zj.localDateTime();
-        const jsonSchema = schema._zod.toJSONSchema?.();
-        assert.deepEqual(jsonSchema, {
+        const jsonSchema = toJSONSchema(schema, { io: "input" });
+        assert.partialDeepStrictEqual(jsonSchema, {
             type: "string",
             format: "local-date-time",
             example: "2020-01-01T14:00:00",
@@ -56,11 +50,21 @@ describeMatrix("LocalDateTime", (zj) => {
     it("should create a modified JSON schema", () => {
         const dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HHmm");
         const schema = zj.localDateTime({ dateTimeFormatter });
-        const jsonSchema = schema._zod.toJSONSchema?.();
-        assert.deepEqual(jsonSchema, {
+        const jsonSchema = toJSONSchema(schema, { io: "input" });
+        assert.partialDeepStrictEqual(jsonSchema, {
             type: "string",
             format: "local-date-time",
             example: "01.01.2020 1400",
+        });
+    });
+
+    it("should preserve JSON schema over refine", () => {
+        const schema = zj.localDateTime().check(z.refine(() => true));
+        const jsonSchema = toJSONSchema(schema, { io: "input" });
+        assert.partialDeepStrictEqual(jsonSchema, {
+            type: "string",
+            format: "local-date-time",
+            example: "2020-01-01T14:00:00",
         });
     });
 });

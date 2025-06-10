@@ -1,16 +1,10 @@
 import assert from "node:assert/strict";
 import { it } from "node:test";
 import { Duration } from "@js-joda/core";
+import { toJSONSchema } from "zod/v4/core";
 import { describeMatrix } from "./matrix.js";
 
-describeMatrix("Duration", (zj) => {
-    it("should allow Duration value", () => {
-        const schema = zj.duration();
-        const duration = Duration.ofMinutes(10);
-        const result = schema.parse(duration);
-        assert.equal(result, duration);
-    });
-
+describeMatrix("Duration", (zj, z) => {
     it("should allow ISO duration value", () => {
         const schema = zj.duration();
         const duration = Duration.ofMinutes(10);
@@ -30,15 +24,25 @@ describeMatrix("Duration", (zj) => {
 
     it("should allow error override", () => {
         const schema = zj.duration({ error: "whoops" });
-        const result = schema.safeParse(1);
+        const result = schema.safeParse("a");
         assert(!result.success);
-        assert.deepEqual(result.error.issues[0].message, "whoops");
+        assert.partialDeepStrictEqual(result.error.issues[0].message, "whoops");
     });
 
     it("should create a standard JSON schema", () => {
         const schema = zj.duration();
-        const jsonSchema = schema._zod.toJSONSchema?.();
-        assert.deepEqual(jsonSchema, {
+        const jsonSchema = toJSONSchema(schema, { io: "input" });
+        assert.partialDeepStrictEqual(jsonSchema, {
+            type: "string",
+            format: "duration",
+            example: "PT1H",
+        });
+    });
+
+    it("should preserve JSON schema over refine", () => {
+        const schema = zj.duration().check(z.refine(() => true));
+        const jsonSchema = toJSONSchema(schema, { io: "input" });
+        assert.partialDeepStrictEqual(jsonSchema, {
             type: "string",
             format: "duration",
             example: "PT1H",

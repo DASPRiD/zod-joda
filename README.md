@@ -4,18 +4,12 @@
 [![codecov](https://codecov.io/gh/DASPRiD/zod-joda/branch/main/graph/badge.svg?token=I960P1I5FR)](https://codecov.io/gh/DASPRiD/zod-joda)
 
 This library adds additional types for [Zod](https://github.com/colinhacks/zod/) to parse and validate dates, times and durations as
-[js-joda](https://github.com/js-joda/js-joda) types. This library has support for both `zod` and `@zod/mini`.
+[js-joda](https://github.com/js-joda/js-joda) types. This library has support for both `zod` v4 and `zod/v4/mini`.
 
 ## Installation
 
 ```bash
-npm install zod-joda @js-joda/core
-
-# a) Install zod peer dependency for full zod support
-npm install zod
-
-# b) Install zod mini for size optimized results 
-npm install @zod/mini
+npm install zod-joda @js-joda/core zod
 ```
   
 ## Quick Start
@@ -27,7 +21,7 @@ method:
 import {zj} from 'zod-joda';
 ```
 
-For `@zod/mini`, import from the mini sub-path:
+For `zod/v4/mini`, import from the mini sub-path:
 
 ```typescript
 import {zj} from 'zod-joda/mini';

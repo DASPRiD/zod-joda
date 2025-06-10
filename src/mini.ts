@@ -1,7 +1,7 @@
-import { type ZodMiniType, transform } from "zod/v4/mini";
+import { type ZodMiniType, globalRegistry, pipe, string, transform } from "zod/v4/mini";
 import {
     type CoreParams,
-    type TransformConstructorConfig,
+    type TransformConfig,
     durationConfig,
     localDateConfig,
     localDateTimeConfig,
@@ -11,42 +11,33 @@ import {
 
 const createParseConstructor =
     <T, P extends CoreParams>({
-        isInstance,
         parse,
         invalidMessage,
         schemaFormat,
         example,
-    }: TransformConstructorConfig<T, P>) =>
+    }: TransformConfig<T, P>) =>
     (params?: P): ZodMiniType<T, T | string> => {
-        const instance = transform<T | string, T>((input: unknown, context) => {
-            if (isInstance(input)) {
-                return input;
-            }
-
-            if (typeof input === "string") {
-                try {
-                    return parse(input, params);
-                } catch {
-                    // Noop
-                }
-            }
-
-            context.issues.push({
-                code: "custom",
-                message: params?.error ?? invalidMessage,
-                input: context.value,
-            });
-
-            return undefined as never;
-        });
-
-        instance._zod.toJSONSchema = () => ({
-            type: "string",
+        const inputSchema = string().register(globalRegistry, { example: example(params) });
+        inputSchema._zod.toJSONSchema = () => ({
             format: schemaFormat,
-            example: example(params),
         });
 
-        return instance;
+        return pipe(
+            inputSchema,
+            transform((value, context) => {
+                try {
+                    return parse(value, params);
+                } catch {
+                    context.issues.push({
+                        code: "custom",
+                        message: params?.error ?? invalidMessage,
+                        input: context.value,
+                    });
+
+                    return undefined as never;
+                }
+            }),
+        );
     };
 
 export const duration = createParseConstructor(durationConfig);
