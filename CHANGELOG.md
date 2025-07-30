@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/dasprid/zod-joda/compare/v2.0.1...v2.1.0) (2025-07-30)
+
+
+### Features
+
+* add support for zod v4 stable release ([01fd788](https://github.com/dasprid/zod-joda/commit/01fd788a5c5d9323ac548d3f19b38a79e37dc49b))
+
 ## [2.0.1](https://github.com/dasprid/zod-joda/compare/v2.0.0...v2.0.1) (2025-06-10)
 
 
