@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { it } from "node:test";
-import { DateTimeFormatter, ZoneId, ZonedDateTime } from "@js-joda/core";
+import { DateTimeFormatter, ZonedDateTime, ZoneId } from "@js-joda/core";
 import { toJSONSchema } from "zod/v4/core";
 import { describeMatrix } from "./matrix.js";
 

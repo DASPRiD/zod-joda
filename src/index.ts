@@ -1,11 +1,11 @@
-import { type ZodType, string } from "zod/v4";
+import { string, type ZodType } from "zod/v4";
 import {
     type CoreParams,
-    type TransformConfig,
     durationConfig,
     localDateConfig,
     localDateTimeConfig,
     localTimeConfig,
+    type TransformConfig,
     zonedDateTimeConfig,
 } from "./core.js";
 
@@ -20,6 +20,7 @@ const createParseConstructor =
         const inputSchema = string().meta({ example: example(params) });
         inputSchema._zod.toJSONSchema = () => ({
             format: schemaFormat,
+            type: "string",
         });
 
         return inputSchema.transform((value, context) => {

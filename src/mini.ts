@@ -1,11 +1,11 @@
-import { type ZodMiniType, globalRegistry, pipe, string, transform } from "zod/v4/mini";
+import { globalRegistry, pipe, string, transform, type ZodMiniType } from "zod/v4/mini";
 import {
     type CoreParams,
-    type TransformConfig,
     durationConfig,
     localDateConfig,
     localDateTimeConfig,
     localTimeConfig,
+    type TransformConfig,
     zonedDateTimeConfig,
 } from "./core.js";
 
@@ -20,6 +20,7 @@ const createParseConstructor =
         const inputSchema = string().register(globalRegistry, { example: example(params) });
         inputSchema._zod.toJSONSchema = () => ({
             format: schemaFormat,
+            type: "string",
         });
 
         return pipe(
