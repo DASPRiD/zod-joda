@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/DASPRiD/zod-joda/compare/v2.1.0...v2.1.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* add provenance attestation ([2d0dd08](https://github.com/DASPRiD/zod-joda/commit/2d0dd0843d091f8e005bf66378e1cd641f7d341c))
+
 # [2.1.0](https://github.com/dasprid/zod-joda/compare/v2.0.1...v2.1.0) (2025-07-30)
 
 

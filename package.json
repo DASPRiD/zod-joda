@@ -1,6 +1,6 @@
 {
   "name": "zod-joda",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "JS-Joda integration for Zod validation library",
   "author": "Ben Scholzen 'DASPRiD'",
   "keywords": [
