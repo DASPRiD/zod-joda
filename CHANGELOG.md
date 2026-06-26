@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/DASPRiD/zod-joda/compare/v2.1.1...v2.1.2) (2026-06-26)
+
+
+### Bug Fixes
+
+* do not manually override toJsonSchema ([#1](https://github.com/DASPRiD/zod-joda/issues/1)) ([08cc699](https://github.com/DASPRiD/zod-joda/commit/08cc6998d77639ac936b8f16d5ccd493511c5465))
+
 ## [2.1.1](https://github.com/DASPRiD/zod-joda/compare/v2.1.0...v2.1.1) (2025-10-23)
 
 
