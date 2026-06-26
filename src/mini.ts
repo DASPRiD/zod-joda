@@ -17,10 +17,10 @@ const createParseConstructor =
         example,
     }: TransformConfig<T, P>) =>
     (params?: P): ZodMiniType<T, T | string> => {
-        const inputSchema = string().register(globalRegistry, { example: example(params) });
-        inputSchema._zod.toJSONSchema = () => ({
-            format: schemaFormat,
+        const inputSchema = string().register(globalRegistry, {
             type: "string",
+            format: schemaFormat,
+            example: example(params),
         });
 
         return pipe(

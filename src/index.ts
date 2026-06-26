@@ -17,10 +17,10 @@ const createParseConstructor =
         example,
     }: TransformConfig<T, P>) =>
     (params?: P): ZodType<T, unknown> => {
-        const inputSchema = string().meta({ example: example(params) });
-        inputSchema._zod.toJSONSchema = () => ({
-            format: schemaFormat,
+        const inputSchema = string().meta({
             type: "string",
+            format: schemaFormat,
+            example: example(params),
         });
 
         return inputSchema.transform((value, context) => {
