@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/DASPRiD/zod-joda/compare/v2.1.2...v2.2.0) (2026-08-22)
+
+
+### Features
+
+* bump packages and add js-joda 6 and removed 3 as it's very old ([#2](https://github.com/DASPRiD/zod-joda/issues/2)) ([8e70c4b](https://github.com/DASPRiD/zod-joda/commit/8e70c4b9f2ba7d1c98f432c3fc7b44c615afa047))
+
 ## [2.1.2](https://github.com/DASPRiD/zod-joda/compare/v2.1.1...v2.1.2) (2026-06-26)
 
 
